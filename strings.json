@@ -126,6 +126,9 @@
       "honk": {
         "name": "Honk horn"
       },
+      "send_navigation_waypoints": {
+        "name": "Send Waypoints"
+      },    
       "wake": {
         "name": "Wake"
       }
@@ -512,6 +515,9 @@
     },
     "missing_scope_energy_cmds": {
       "message": "Missing energy commands scope."
+    },
+    "waypoint_send_failed": {
+      "message": "Failed to send waypoints."
     }
   }
 }
