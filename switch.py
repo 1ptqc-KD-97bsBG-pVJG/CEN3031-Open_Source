@@ -24,7 +24,7 @@ from .models import TeslaFleetEnergyData, TeslaFleetVehicleData
 
 PARALLEL_UPDATES = 0
 
-
+mackenziiemahar
 @dataclass(frozen=True, kw_only=True)
 class TeslaFleetSwitchEntityDescription(SwitchEntityDescription):
     """Describes TeslaFleet Switch entity."""

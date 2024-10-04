@@ -54,6 +54,14 @@ DESCRIPTIONS: tuple[TeslaFleetButtonEntityDescription, ...] = (
             lon=self.coordinator.data["drive_state_longitude"],
         ),
     ),
+    TeslaFleetButtonEntityDescription(
+        key="send_navigation_waypoints",
+        func=lambda self: self.send_navigation_waypoints()
+    ),
+    TeslaFleetButtonEntityDescription(
+        key="send_navigation_waypoints",
+        func=lambda self: self.send_navigation_waypoints()
+    ),
 )
 
 

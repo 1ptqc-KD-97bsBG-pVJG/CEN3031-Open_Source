@@ -7,6 +7,8 @@ from typing import Any
 from tesla_fleet_api.exceptions import TeslaFleetError
 
 from homeassistant.exceptions import HomeAssistantError
+from homeassistant.exceptions import ServiceValidationError
+
 
 from .const import DOMAIN, LOGGER, TeslaFleetState
 from .models import TeslaFleetVehicleData
@@ -78,3 +80,32 @@ async def handle_vehicle_command(command: Awaitable) -> bool:
         )
     # Response with result of true
     return result
+
+async def send_navigation_waypoints(self, waypoints: str) -> None:
+    """Send navigation waypoints to Tesla vehicle."""
+    await self.wake_up_if_asleep()
+
+    if not waypoints:
+        raise ServiceValidationError(
+            translation_domain=DOMAIN,
+            translation_key="missing_waypoints",
+        )
+
+    if not self._validate_waypoints_format(waypoints):
+        raise ServiceValidationError(
+            translation_domain=DOMAIN,
+            translation_key="invalid_waypoints_format",
+        )
+
+    vin = self.data.vin
+    url = f"/api/1/vehicles/{vin}/command/navigation_waypoints_request"
+    
+    payload = {
+        "waypoints": waypoints
+    }
+
+    await handle_vehicle_command(self.api.post(url, json=payload))
+
+def _validate_waypoints_format(self, waypoints: str) -> bool:
+    """Validates that waypoints are in the correct format."""
+    return all(wp.startswith("refId:") for wp in waypoints.split(","))
